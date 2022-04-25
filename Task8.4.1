@@ -1,0 +1,31 @@
+# This is a sample Python script.
+
+# Press Shift+F10 to execute it or replace it with your code.
+# Press Double Shift to search everywhere for classes, files, tool windows, actions, and settings.
+def syndicate_function(filepath, line_number):
+    """
+    This function gets as an input a path for file and line number , the function returns the content of the line
+    in that file.
+    if any error have been raised the function writes it to log.txt file.
+    :param filepath.
+    :param line_number.
+    :return: content of the line.
+    """
+    try:
+        input_file = open(filepath, "r")
+        line = [item for sublist in [input_file.read().split("\n")] for item in sublist][line_number]
+        input_file.close()
+        return line
+    except Exception as ex:
+        out_file = open("log.txt", "a")
+        out_file.write(str(ex)+"\n")
+        out_file.close()
+
+
+# Press the green button in the gutter to run the script.
+if __name__ == '__main__':
+    print(syndicate_function("file.txt", 20))
+    print(syndicate_function("file.txt", 200))
+    print(syndicate_function("file1.txt", 20))
+    print(syndicate_function("file.txtt", 20))
+# See PyCharm help at https://www.jetbrains.com/help/pycharm/
