@@ -1,0 +1,26 @@
+# This is a sample Python script.
+
+# Press Shift+F10 to execute it or replace it with your code.
+# Press Double Shift to search everywhere for classes, files, tool windows, actions, and settings.
+from PIL import Image
+import numpy as np
+import cv2
+import numpy
+
+
+def get_encodings(path):
+    """
+    This function get a path for a file, then the function encodes the file and returns the encoded message.
+    :param path: path for a file.
+    :return: the encoded message.
+    """
+    img = cv2.imread(path, 0)
+    coordinates = sorted(numpy.column_stack(numpy.where(img == 1)), key=lambda x: x[1])
+    return "".join([chr(row) for row, col in coordinates])
+
+
+# Press the green button in the gutter to run the script.
+if __name__ == '__main__':
+    print("The file encoding is: ", get_encodings('code.png'))
+
+# See PyCharm help at https://www.jetbrains.com/help/pycharm/
