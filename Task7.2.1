@@ -1,0 +1,88 @@
+# This is a sample Python script.
+
+# Press Shift+F10 to execute it or replace it with your code.
+# Press Double Shift to search everywhere for classes, files, tool windows, actions, and settings.
+class PostOffice:
+    """A Post Office class. Allows users to message each other.
+
+    :ivar int message_id: Incremental id of the last message sent.
+    :ivar dict boxes: Users' inboxes.
+
+    :param list usernames: Users for which we should create PO Boxes.
+    """
+
+    def __init__(self, usernames):
+        self.message_id = 0
+        self.boxes = {user: [] for user in usernames}
+
+    def send_message(self, sender, recipient, message_body, urgent=False):
+        """Send a message to a recipient.
+        :param str sender: The message sender's username.
+        :param str recipient: The message recipient's username.
+        :param str message_body: The body of the message.
+        :param urgent: The urgency of the message.
+        :type urgent: bool, optional
+        :return: The message ID, auto incremented number.
+        :rtype: int
+        :raises KeyError: if the recipient does not exist.
+        """
+        user_box = self.boxes[recipient]
+        self.message_id = self.message_id + 1
+        message_details = {
+            'id': self.message_id,
+            'body': message_body,
+            'sender': sender,
+        }
+        if urgent:
+            user_box.insert(0, message_details)
+        else:
+            user_box.append(message_details)
+        return self.message_id
+
+    def read_inbox(self, user_name, n=-1):
+        """
+        This function returns the first n massages that was sent to user name , if n = -1 then the function returns all
+        the massages.
+        :param user_name.
+        :param n: number of messages.
+        :return:first n massages that was sent to user name if n = -1 then the function returns all
+        the massages.
+        """
+        return self.boxes[user_name][:n if n != -1 else len(self.boxes)]
+
+    def search_inbox(self, user_name, string):
+        """
+        This function return the user messages that contains the passed string
+        :param user_name.
+        :param string: the wanted string to check.
+        :return: the user messages that contains the passed string.
+        """
+        return [msg for msg in self.boxes[user_name] if string in msg['body']]
+
+
+# Press the green button in the gutter to run the script.
+if __name__ == '__main__':
+
+    user_names = ['Mohamad', 'Waleed']
+    post_office = PostOffice(user_names)
+    post_office.send_message(
+        sender='Mohamad',
+        recipient='Waleed',
+        message_body='Hello, Dad come home.', )
+    post_office.send_message(
+        sender='Mohamad',
+        recipient='Waleed',
+        message_body='Hello, Good morning dad.',
+    )
+    post_office.send_message(
+        sender='Waleed',
+        recipient='Mohamad',
+        message_body='Hello, Im coming.',
+    )
+
+    print(*post_office.read_inbox('Waleed'))
+    print(*post_office.read_inbox('Waleed', 1))
+    print(*post_office.search_inbox('Waleed', 'Hello'))
+    print(*post_office.search_inbox('Mohamad', 'Hello'))
+
+# See PyCharm help at https://www.jetbrains.com/help/pycharm/
