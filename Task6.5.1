@@ -1,0 +1,27 @@
+# This is a sample Python script.
+
+# Press Shift+F10 to execute it or replace it with your code.
+# Press Double Shift to search everywhere for classes, files, tool windows, actions, and settings.
+
+
+def group_by(function, iterable):
+    """
+    This function gets a function as input and list of values as an input for the passed function.
+    Then the function creates a dictionary =>
+    Key: returned value from the passed function.
+    Value: list of all the inputs that gave us the same key.
+    :param function.
+    :param iterable: list of inputs.
+    :return: dictionary.
+    """
+    my_dict = {}
+    for value in iterable:
+        my_dict.setdefault(function(value), []).append(value)
+    return my_dict
+
+
+# Press the green button in the gutter to run the script.
+if __name__ == '__main__':
+    print(group_by(len, ["hi", "bye", "yo", "try"]))
+
+# See PyCharm help at https://www.jetbrains.com/help/pycharm/
